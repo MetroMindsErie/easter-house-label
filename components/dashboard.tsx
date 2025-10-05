@@ -15,7 +15,7 @@ import { WalletBalance } from "./balance";
 // Global session storage mechanism
 const SESSION_STORAGE_KEY = "crossmint_wallet_synced";
 
-export function Dashboard() {
+export function Dashboard({ isLoading = false }) {
   const { user } = useAuth();
   const { wallet } = useWallet();
   const [copiedAddress, setCopiedAddress] = useState(false);
@@ -97,100 +97,151 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 content-center">
+    <div className="min-h-screen bg-white content-center">
       <div className="w-full max-w-7xl mx-auto px-4 py-6 sm:pt-8">
+        {/* Logo and branding section */}
         <div className="flex flex-col mb-6 max-sm:items-center">
-          <Image
-            src="/crossmint.svg"
-            alt="Crossmint logo"
-            priority
-            width={150}
-            height={150}
-            className="mb-4"
-          />
-          <h1 className="text-2xl font-semibold mb-2">Wallets Quickstart</h1>
-          <p className="text-gray-600 text-sm">
-            Create and interact with Crossmint wallets
+          <div className="flex items-center justify-between w-full">
+            {/* Updated Easter House Music Group Logo with proper styling */}
+            <div className="relative w-[220px] h-[100px]">
+              <Image
+                src="/easter-house-logo.png" 
+                alt="Easter House Music Group"
+                priority
+                fill
+                style={{
+                  objectFit: 'contain',
+                }}
+                className="rounded-full"
+              />
+            </div>
+            
+            {/* Small Crossmint logo for authenticity */}
+            <div className="flex items-center">
+              <span className="text-xs text-gray-500 mr-2">Powered by</span>
+              <Image
+                src="/crossmint.svg"
+                alt="Crossmint"
+                width={80}
+                height={30}
+              />
+            </div>
+          </div>
+          
+          <h1 className="text-3xl font-bold mb-2 text-indigo-900">Music NFT Dashboard</h1>
+          <p className="text-indigo-600 text-sm">
+            Mint, collect, and trade exclusive Easter House Music Group tracks
           </p>
         </div>
 
         {/* Dashboard Header */}
-        <div className="flex flex-col gap-4 bg-white rounded-2xl border shadow-sm p-6">
+        <div className="flex flex-col gap-4 bg-white rounded-2xl border border-indigo-100 shadow-md p-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Dashboard</h2>
+            <div className="flex items-center">
+              <Image
+                src="/music.png"
+                alt="Music"
+                width={24}
+                height={24}
+                className="mr-2"
+              />
+              <h2 className="text-xl font-semibold text-indigo-900">Your Music Collection</h2>
+            </div>
             <LogoutButton />
           </div>
 
-          {/* Main Dashboard Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* USDXM Balance & Wallet Details Column */}
-            <div className="flex flex-col gap-6">
-              {/* USDXM Balance Section */}
-              <div className="bg-white rounded-2xl border shadow-sm p-6">
-                <WalletBalance />
+          {/* Show loading spinner when loading from mint page */}
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+                <p className="text-indigo-600 font-medium">Refreshing your collection...</p>
               </div>
+            </div>
+          ) : (
+            /* Main Dashboard Grid */
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* USDXM Balance & Wallet Details Column */}
+              <div className="flex flex-col gap-6">
+                {/* USDXM Balance Section */}
+                <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm p-6 hover:shadow-md transition-shadow">
+                  <WalletBalance />
+                </div>
 
-              {/* Wallet Details Section */}
-              <div className="bg-white rounded-2xl border shadow-sm p-6">
-                <h3 className="text-lg font-semibold mb-4">Wallet details</h3>
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-2 justify-between">
-                    <span className="text-sm font-medium text-gray-500">
-                      Address
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-sm text-gray-900 overflow-auto">
-                        {walletAddress
-                          ? `${walletAddress.slice(
-                              0,
-                              6
-                            )}...${walletAddress.slice(-6)}`
-                          : ""}
+                {/* Wallet Details Section */}
+                <div className="bg-white rounded-2xl border border-indigo-100 shadow-sm p-6 hover:shadow-md transition-shadow">
+                  <h3 className="text-lg font-semibold mb-4 text-indigo-800">Artist Wallet</h3>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2 justify-between">
+                      <span className="text-sm font-medium text-indigo-500">
+                        Wallet Address
                       </span>
-                      <button
-                        onClick={handleCopyAddress}
-                        className="text-gray-500 hover:text-gray-700 transition-colors"
-                      >
-                        {copiedAddress ? (
-                          <Image
-                            src="/circle-check-big.svg"
-                            alt="Copied"
-                            width={16}
-                            height={16}
-                          />
-                        ) : (
-                          <Image
-                            src="/copy.svg"
-                            alt="Copy"
-                            width={16}
-                            height={16}
-                          />
-                        )}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-sm text-gray-900 overflow-auto">
+                          {walletAddress
+                            ? `${walletAddress.slice(
+                                0,
+                                6
+                              )}...${walletAddress.slice(-6)}`
+                            : ""}
+                        </span>
+                        <button
+                          onClick={handleCopyAddress}
+                          className="text-indigo-500 hover:text-indigo-700 transition-colors"
+                        >
+                          {copiedAddress ? (
+                            <Image
+                              src="/circle-check-big.svg"
+                              alt="Copied"
+                              width={16}
+                              height={16}
+                            />
+                          ) : (
+                            <Image
+                              src="/copy.svg"
+                              alt="Copy"
+                              width={16}
+                              height={16}
+                            />
+                          )}
+                        </button>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center gap-2 justify-between">
-                    <span className="text-sm font-medium text-gray-500">
-                      Owner
-                    </span>
-                    <span className="text-sm text-gray-900 overflow-auto">
-                      {wallet?.owner?.replace(/^[^:]*:/, "") || "Current User"}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 justify-between">
-                    <span className="text-sm font-medium text-gray-500">
-                      Chain
-                    </span>
-                    <span className="text-sm text-gray-900 capitalize text-nowrap overflow-auto">
-                      {wallet?.chain}
-                    </span>
+                    <div className="flex items-center gap-2 justify-between">
+                      <span className="text-sm font-medium text-indigo-500">
+                        Artist
+                      </span>
+                      <span className="text-sm text-gray-900 overflow-auto">
+                        {wallet?.owner?.replace(/^[^:]*:/, "") || "Easter House Artist"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 justify-between">
+                      <span className="text-sm font-medium text-indigo-500">
+                        Network
+                      </span>
+                      <span className="text-sm text-gray-900 capitalize text-nowrap overflow-auto">
+                        {wallet?.chain}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <TransferFunds />
+              <Activity />
             </div>
-            <TransferFunds />
-            <Activity />
+          )}
+        </div>
+        
+        {/* New music releases section */}
+        <div className="mt-8 bg-white rounded-2xl border border-indigo-100 shadow-md p-6">
+          <h2 className="text-xl font-semibold text-indigo-900 mb-4">Latest Music NFT Drops</h2>
+          <p className="text-gray-600 mb-6">Check out the latest exclusive Easter House Music releases available for minting</p>
+          
+          <div className="flex justify-center items-center">
+            <div className="text-center p-8 text-indigo-500">
+              <p>New music drops coming soon</p>
+            </div>
           </div>
         </div>
       </div>
