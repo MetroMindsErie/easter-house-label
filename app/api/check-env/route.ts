@@ -13,7 +13,15 @@ export async function GET() {
     };
 
     // Test a fetch to Crossmint API (just a HEAD request to check connection)
-    let crossmintApiCheck = { success: false, error: null };
+    type CrossmintApiCheck = {
+      success: boolean;
+      error?: string | null;
+      code?: string | null;
+      status?: number;
+      statusText?: string;
+    };
+
+    let crossmintApiCheck: CrossmintApiCheck = { success: false, error: null };
     try {
       const resp = await fetch('https://api.crossmint.com/health', { 
         method: 'HEAD',

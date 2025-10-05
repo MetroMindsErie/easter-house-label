@@ -5,22 +5,22 @@ import { cn } from "@/lib/utils";
 
 const features = [
   {
-    title: "Launch Fast",
+    title: "Exclusive Music",
     description:
-      "Integrate auth, create wallets, sponsor gas, and enable token transfers with just a few lines of code. No blockchain experience needed.",
-    iconPath: "/rocket.svg",
+      "Access limited edition tracks, albums, and mixes from our roster of talented house music artists.",
+    iconPath: "/music.svg", // You'll need to add this icon
   },
   {
-    title: "Scale Big",
+    title: "Digital Collectibles",
     description:
-      "All the APIs you need to power onramping, activity tracking, staking and more. Built to grow with you.",
-    iconPath: "/trending-up.svg",
+      "Own unique digital artwork and music NFTs from your favorite Easter House artists and events.",
+    iconPath: "/collection.svg", // You'll need to add this icon
   },
   {
-    title: "Protect Your Assets",
+    title: "Community Access",
     description:
-      "Smart wallets with onchain 2FA, flexible recovery methods, and no vendor lock-in. Secure and ready for what’s next.",
-    iconPath: "/shield-check.svg",
+      "Join exclusive events, virtual listening parties, and connect with other Easter House music fans.",
+    iconPath: "/users.svg", // You'll need to add this icon
   },
 ];
 
@@ -58,18 +58,21 @@ export function LandingPage({ isLoading }: { isLoading: boolean }) {
         {/* Content */}
         <div className="relative z-10 flex flex-col gap-12 text-white">
           <div className="flex flex-col gap-4">
-            <h1 className="text-6xl font-bold">Crossmint Wallets</h1>
+            {/* Logo */}
+            <div className="mb-4">
+              <Image 
+                src="/easter-house-logo.png" 
+                alt="Easter House Music Group" 
+                width={120} 
+                height={120}
+                className="rounded-full"
+              />
+            </div>
+            
+            <h1 className="text-6xl font-bold">Easter House Music Group</h1>
             <p className="text-white/60 text-lg">
-              Get started with the Crossmint Wallets Quickstart.{" "}
-              <a
-                href="https://github.com/crossmint/wallets-quickstart"
-                style={{ color: "white" }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Clone this repo
-              </a>{" "}
-              and try it out in minutes!
+              Your gateway to exclusive house music, digital collectibles, and community events.
+              Powered by secure Crossmint wallet technology.
             </p>
           </div>
 
@@ -103,6 +106,11 @@ export function LandingPage({ isLoading }: { isLoading: boolean }) {
               </div>
             ))}
           </div>
+          
+          {/* Attribution to Crossmint */}
+          <p className="text-xs text-white/40 mt-4">
+            Secure wallet technology provided by Crossmint
+          </p>
         </div>
       </div>
 
@@ -114,6 +122,10 @@ export function LandingPage({ isLoading }: { isLoading: boolean }) {
           </div>
         ) : (
           <div className="w-full max-w-md bg-white rounded-3xl border shadow-lg overflow-hidden">
+            <div className="p-4 bg-black text-white text-center">
+              <h2 className="font-bold">Join Easter House Music Group</h2>
+              <p className="text-sm">Sign up or log in to access exclusive content</p>
+            </div>
             <EmbeddedAuthForm />
           </div>
         )}
